@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    <title>勤怠管理ホーム</title>
+    </head>
+    <body>
+        <h1>勤怠管理ホーム</h1>
+        <p id="RealtimeClockArea"></p>
+        <button onclick="TimeStamping()">打刻</button>
+        <button onclick="location.href='list'">勤怠一覧</button>
+    </body>
+</html>
+
+<!-- 時間表示スクリプト -->
+<script>
+    function showClock() {
+        var nowTime = new Date(); //  現在日時を得る
+        var nowHour = nowTime.getHours(); // 時を抜き出す
+        var nowMin  = nowTime.getMinutes(); // 分を抜き出す
+        var nowSec  = nowTime.getSeconds(); // 秒を抜き出す
+        var msg = nowHour + ":" + nowMin + ":" + nowSec;
+        document.getElementById("RealtimeClockArea").innerHTML = msg;
+    }
+    setInterval('showClock()',1000);
+</script>
+
+<!-- 打刻ボタンクリック時、時間を登録するスクリプト -->
+<script>
+    function TimeStamping() {
+        var nowTime = new Date();
+        var nowYear = 1900 + nowTime.getYear();
+        var nowMonth = nowTime.getMonth();
+        var nowDay = nowTime.getDay();
+        var nowHour = nowTime.getHours(); // 時を抜き出す
+        var nowMin  = nowTime.getMinutes(); // 分を抜き出す
+        var nowSec  = nowTime.getSeconds(); // 秒を抜き出す
+        var url = new URL(window.location.href);
+        var stampedTime = nowYear + "/" + nowMonth + "/" + nowDay + " " + nowHour + ":" + nowMin + ":" + nowSec;
+        url.searchParams.append('stampedTime', stampedTime);
+        location.href = url; 
+    }
+</script>
+
+<style>
+    #RealtimeClockArea {
+        font-size: x-large;
+    }
+</style>
