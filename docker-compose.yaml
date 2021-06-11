@@ -1,5 +1,15 @@
 version: "3"
 services: 
+    db:
+        build:
+            context: ./db
+        ports:
+            - "13306:3306"
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root
+        container_name: "mysql5.7-jp"
+        volumes: 
+            - ./initdb/:/docker-entrypoint-initdb.d
     web:
         build: 
             context: ./spring-boot-docker-App
@@ -13,13 +23,3 @@ services:
             - ./spring-boot-docker-App/:/var/www/spring-boot/
 
         container_name: "spring-boot-docker-App"
-    db:
-        build:
-            context: ./db
-        ports:
-            - "13306:3306"
-        environment: 
-            - MYSQL_ROOT_PASSWORD=root
-        container_name: "mysql5.7-jp"
-        volumes: 
-            - ./initdb/:/docker-entrypoint-initdb.d
